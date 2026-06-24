@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="it">
+    <head>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1, viewport-fit=cover"
+        />
+        <title>Nutrizione</title>
+        <meta name="theme-color" content="#1d9e75" />
+        <meta name="description" content="Diario nutrizionale: macro e fibra per alimento, pasto e giornata." />
+        <link rel="manifest" href="/manifest.webmanifest" />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        <meta name="apple-mobile-web-app-title" content="Nutrizione" />
+        <link rel="stylesheet" href="/dashboard.css" />
+    </head>
+    <body>
+        <main id="root" aria-live="polite">
+            <header class="topbar" hidden>
+                <div class="nav">
+                    <button id="prev" class="iconbtn" aria-label="Giorno precedente">&larr;</button>
+                    <div class="datewrap">
+                        <span id="dateLabel" class="date">—</span>
+                        <button id="today" class="linkbtn">oggi</button>
+                    </div>
+                    <button id="next" class="iconbtn" aria-label="Giorno successivo">&rarr;</button>
+                </div>
+                <button id="logout" class="linkbtn">esci</button>
+            </header>
+
+            <section id="login" class="login" hidden>
+                <h1>Nutrizione</h1>
+                <p class="muted">Accedi con le stesse credenziali del connettore MCP.</p>
+                <label for="email">Email</label>
+                <input id="email" type="email" autocomplete="username" inputmode="email" />
+                <label for="password">Password</label>
+                <input id="password" type="password" autocomplete="current-password" />
+                <button id="signin" class="primary">Accedi</button>
+                <p id="loginError" class="error" role="alert" hidden></p>
+            </section>
+
+            <section id="app" hidden>
+                <div id="summary" class="cards"></div>
+                <div id="chart" class="chart" aria-hidden="true"></div>
+                <div id="meals"></div>
+                <p id="empty" class="muted empty" hidden>Nessun pasto registrato per questo giorno.</p>
+                <p class="footnote muted">
+                    La fibra è ricostruita dalle note dei pasti (campo non
+                    strutturato a monte). Sola lettura: per registrare o
+                    correggere, usa la chat.
+                </p>
+            </section>
+
+            <section id="loading" class="muted loading">Caricamento…</section>
+        </main>
+        <script src="/dashboard.js" defer></script>
+    </body>
+</html>

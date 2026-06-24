@@ -1,0 +1,286 @@
+:root {
+    --bg: #ffffff;
+    --surface: #f6f6f4;
+    --card: #ffffff;
+    --text: #1a1a18;
+    --muted: #6b6b66;
+    --border: rgba(0, 0, 0, 0.12);
+    --accent: #0f6e56;
+    --accent-soft: #e1f5ee;
+    --fiber: #185fa5;
+    --fiber-soft: #e6f1fb;
+    --danger: #a32d2d;
+    --radius: 12px;
+    --maxw: 720px;
+    color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #1a1a18;
+        --surface: #242422;
+        --card: #201f1d;
+        --text: #ece9e3;
+        --muted: #9a988f;
+        --border: rgba(255, 255, 255, 0.14);
+        --accent: #5dcaa5;
+        --accent-soft: #0f6e56;
+        --fiber: #85b7eb;
+        --fiber-soft: #0c447c;
+    }
+}
+
+* {
+    box-sizing: border-box;
+}
+html {
+    -webkit-text-size-adjust: 100%;
+}
+body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family:
+        system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial,
+        sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    padding: env(safe-area-inset-top) env(safe-area-inset-right)
+        env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+#root {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 16px 16px 48px;
+}
+
+.muted {
+    color: var(--muted);
+}
+.loading {
+    text-align: center;
+    padding: 40px 0;
+}
+
+/* Top bar */
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 20px;
+}
+.nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.datewrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 150px;
+}
+.date {
+    font-weight: 500;
+}
+.iconbtn {
+    background: var(--surface);
+    border: 0.5px solid var(--border);
+    color: var(--text);
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    font-size: 18px;
+    cursor: pointer;
+}
+.iconbtn:active {
+    transform: scale(0.96);
+}
+.linkbtn {
+    background: none;
+    border: none;
+    color: var(--accent);
+    cursor: pointer;
+    font-size: 13px;
+    padding: 2px 4px;
+}
+
+/* Login */
+.login {
+    max-width: 340px;
+    margin: 8vh auto 0;
+    display: flex;
+    flex-direction: column;
+}
+.login h1 {
+    margin: 0 0 4px;
+    font-size: 24px;
+    font-weight: 500;
+}
+.login label {
+    font-size: 13px;
+    color: var(--muted);
+    margin: 14px 0 4px;
+}
+input {
+    font-size: 16px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    border: 0.5px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+}
+input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-soft);
+}
+.primary {
+    margin-top: 18px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.primary:disabled {
+    opacity: 0.6;
+}
+.error {
+    color: var(--danger);
+    font-size: 14px;
+    margin-top: 12px;
+}
+
+/* Metric cards */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    gap: 10px;
+    margin-bottom: 22px;
+}
+.metric {
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 12px 14px;
+}
+.metric .label {
+    font-size: 13px;
+    color: var(--muted);
+}
+.metric .value {
+    font-size: 22px;
+    font-weight: 500;
+    margin-top: 2px;
+}
+.metric .unit {
+    font-size: 12px;
+    color: var(--muted);
+}
+.metric.fiber .label,
+.metric.fiber .value {
+    color: var(--fiber);
+}
+.metric .goal {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+}
+
+/* Per-meal calorie chart */
+.chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
+    height: 130px;
+    margin-bottom: 24px;
+}
+.bar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    height: 100%;
+    gap: 6px;
+}
+.bar .fill {
+    width: 100%;
+    background: var(--accent);
+    border-radius: 6px 6px 0 0;
+    min-height: 3px;
+}
+.bar .blab {
+    font-size: 11px;
+    color: var(--muted);
+    text-align: center;
+}
+.bar .bval {
+    font-size: 11px;
+    color: var(--text);
+}
+
+/* Meal cards + tables */
+.meal {
+    background: var(--card);
+    border: 0.5px solid var(--border);
+    border-radius: var(--radius);
+    padding: 14px 16px;
+    margin-bottom: 14px;
+}
+.meal h2 {
+    font-size: 15px;
+    font-weight: 500;
+    margin: 0 0 8px;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+.meal h2 .kcal {
+    font-size: 13px;
+    color: var(--muted);
+    font-weight: 400;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 13px;
+}
+th,
+td {
+    padding: 5px 3px;
+    text-align: right;
+}
+th:first-child,
+td:first-child {
+    text-align: left;
+    width: 42%;
+    word-break: break-word;
+}
+thead th {
+    font-weight: 400;
+    color: var(--muted);
+    font-size: 12px;
+    border-bottom: 0.5px solid var(--border);
+}
+th.fib,
+td.fib {
+    color: var(--fiber);
+}
+tr.sub td {
+    border-top: 0.5px solid var(--border);
+    font-weight: 500;
+}
+.empty {
+    text-align: center;
+    padding: 30px 0;
+}
+.footnote {
+    font-size: 12px;
+    margin-top: 24px;
+    line-height: 1.5;
+}

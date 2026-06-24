@@ -1,0 +1,18 @@
+{
+    "name": "Nutrizione",
+    "short_name": "Nutrizione",
+    "description": "Diario nutrizionale: macro e fibra per alimento, pasto e giornata.",
+    "start_url": "/dashboard",
+    "scope": "/dashboard",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#1d9e75",
+    "icons": [
+        {
+            "src": "/apple-touch-icon.png",
+            "sizes": "180x180",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ]
+}

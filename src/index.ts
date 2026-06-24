@@ -6,6 +6,7 @@ import { authenticateBearer, rateLimit } from "./middleware.js";
 import { handleMcp } from "./mcp.js";
 import { startExportCleanup } from "./export.js";
 import { getLandingStats, type LandingStats } from "./supabase.js";
+import { createDashboardRouter } from "./dashboard.js";
 
 const app = new Hono();
 
@@ -107,6 +108,10 @@ app.route("/", createOAuthRouter());
 // MCP endpoint (protected)
 app.all("/mcp", authenticateBearer, rateLimit, handleMcp);
 
+// Dashboard API (cookie-session login + read-only day view). Mounted before
+// the static asset routes so its /api/dashboard/* paths take precedence.
+app.route("/", createDashboardRouter());
+
 // Aggregate landing-page stats, cached in-memory so page views don't each hit
 // the DB. The numbers move slowly, so a stale value for a few minutes is fine.
 const STATS_TTL_MS = 5 * 60 * 1000;
@@ -178,6 +183,37 @@ app.get("/", async (c) => {
 // Privacy & Terms
 app.get("/privacy", async (c) => {
     return c.html(await Bun.file("./public/privacy.html").text());
+});
+
+// ---- Dashboard PWA ----
+// The page itself is public HTML; it calls /api/dashboard/session on load and
+// shows a login form until a session cookie is present. Auth is enforced on
+// the data API, not on the shell.
+app.get("/dashboard", async (c) => {
+    return c.html(await Bun.file("./public/dashboard.html").text());
+});
+app.get("/dashboard.css", async (c) => {
+    return c.body(await Bun.file("./public/dashboard.css").text(), 200, {
+        "Content-Type": "text/css",
+    });
+});
+app.get("/dashboard.js", async (c) => {
+    return c.body(await Bun.file("./public/dashboard.js").text(), 200, {
+        "Content-Type": "text/javascript",
+    });
+});
+app.get("/manifest.webmanifest", async (c) => {
+    return c.body(await Bun.file("./public/manifest.webmanifest").text(), 200, {
+        "Content-Type": "application/manifest+json",
+    });
+});
+app.get("/sw.js", async (c) => {
+    // Service-Worker-Allowed lets a script served from "/" claim root scope.
+    return c.body(await Bun.file("./public/sw.js").text(), 200, {
+        "Content-Type": "text/javascript",
+        "Service-Worker-Allowed": "/",
+        "Cache-Control": "no-cache",
+    });
 });
 
 // CSS
